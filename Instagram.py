@@ -1,10 +1,13 @@
-from urllib import parse, request
+from urllib import parse
+from HttpClient import *
+import json
+
 
 class Instagram:
 
     def __init__(self):
-        # TODO init http_client
         self._access_token = '20261245390.1677ed0.f9d9fd4ebb134fde90dc9ef54d443fa8'
+        self._http_client = HttpClient()
 
     def media(self):
         response = self._get('users/self/media/recent')
@@ -23,8 +26,9 @@ class Instagram:
         Получает ответ от API
         :return: словарь из json ответа
         """
-        print(self._build_api_url(path))
-        return {}
+        url = self._build_api_url(path)
+        response = self._http_client.send_request(url)
+        return json.loads(response)
 
     def _build_api_url(self, path, params=None):
         """
@@ -50,6 +54,6 @@ def test_access_token(api):
 
 if __name__ == '__main__':
     api = Instagram()
-    api.access_token = '2258522848.1677ed0.e289f430fd484cceb42ae8d0f0ad85b6'
+    # api.access_token = '2258522848.1677ed0.e289f430fd484cceb42ae8d0f0ad85b6'
     # print(test_access_token(api))
     print(api.media())
