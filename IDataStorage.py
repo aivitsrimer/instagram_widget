@@ -1,7 +1,7 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 
-class IDataStorage:
+class IDataStorage(ABC):
     @abstractmethod
     def get_objects(self):
         pass
