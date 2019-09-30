@@ -28,7 +28,12 @@ class Instagram:
         """
         url = self._build_api_url(path)
         response = self._http_client.send_request(url)
-        return json.loads(response)
+        parsed_response = json.loads(response)
+        # print(url)
+
+        # TODO обработать ошибки
+
+        return parsed_response['data']
 
     def _build_api_url(self, path, params=None):
         """
@@ -54,6 +59,6 @@ def test_access_token(api):
 
 if __name__ == '__main__':
     api = Instagram()
-    # api.access_token = '2258522848.1677ed0.e289f430fd484cceb42ae8d0f0ad85b6'
+    api.access_token = '2258522848.1677ed0.e289f430fd484cceb42ae8d0f0ad85b6'
     # print(test_access_token(api))
     print(api.media())

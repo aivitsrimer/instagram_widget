@@ -6,7 +6,7 @@ from urllib import parse, request
 class HttpClient(object):
 
     @staticmethod
-    def send_request(self, url, params=None, timeout=30):
+    def send_request(url, params=None, timeout=30):
         post_data = parse.urlencode(params) if params else None
 
         response = request.urlopen(
