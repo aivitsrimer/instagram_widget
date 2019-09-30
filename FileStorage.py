@@ -39,8 +39,9 @@ class FileStorage(IDataStorage):
         try:
             with open(self._folder + file_id + '.json', 'w') as json_file:
                 json_file.write(value)
-        except Exception:
-            return False
+        except Exception as ex:
+            # return False
+            print(ex)
         return True
 
     def delete_object(self, key):

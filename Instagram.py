@@ -59,6 +59,5 @@ def test_access_token(api):
 
 if __name__ == '__main__':
     api = Instagram()
-    api.access_token = '2258522848.1677ed0.e289f430fd484cceb42ae8d0f0ad85b6'
     # print(test_access_token(api))
     print(api.media())
