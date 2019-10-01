@@ -1,8 +1,8 @@
 from urllib import parse
 from HttpClient import *
 import json
-import ApplicationSettings
-from SqliteDataStorage import SqliteDataStorage
+from ApplicationSettings import application_settings
+
 
 class Instagram:
 
@@ -64,9 +64,5 @@ def test_access_token(api):
 
 
 if __name__ == '__main__':
-    access_token = ApplicationSettings.application_settings.token
-    api = Instagram(access_token)
-    # print(test_access_token(api))
-    # print(api.media())
-    db = SqliteDataStorage(ApplicationSettings.application_settings.db_name)
-    print(db.get_photos(ApplicationSettings.application_settings.token))
+    api = Instagram(application_settings.token)
+    print(test_access_token(api))
