@@ -1,12 +1,13 @@
 from urllib import parse
 from HttpClient import *
 import json
-
+import ApplicationSettings
+from SqliteDataStorage import SqliteDataStorage
 
 class Instagram:
 
-    def __init__(self):
-        self._access_token = '20261245390.1677ed0.f9d9fd4ebb134fde90dc9ef54d443fa8'
+    def __init__(self, token=None):
+        self._access_token = token
         self._http_client = HttpClient()
 
     def media(self):
@@ -26,6 +27,7 @@ class Instagram:
         Получает ответ от API
         :return: словарь из json ответа
         """
+        self._check_exists_token()
         url = self._build_api_url(path)
         response = self._http_client.send_request(url)
         parsed_response = json.loads(response)
@@ -46,6 +48,10 @@ class Instagram:
         params = {'access_token': self._access_token}
         return url + path + '/?' + parse.urlencode(params)
 
+    def _check_exists_token(self):
+        if not self._access_token:
+            raise Exception('Token is None')
+
 
 def test_access_token(api):
     try:
@@ -58,6 +64,9 @@ def test_access_token(api):
 
 
 if __name__ == '__main__':
-    api = Instagram()
+    access_token = ApplicationSettings.application_settings.token
+    api = Instagram(access_token)
     # print(test_access_token(api))
-    print(api.media())
+    # print(api.media())
+    db = SqliteDataStorage(ApplicationSettings.application_settings.db_name)
+    print(db.get_photos(ApplicationSettings.application_settings.token))

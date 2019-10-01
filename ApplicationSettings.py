@@ -4,9 +4,11 @@ import sys
 from configparser import ConfigParser
 
 
-class ApplicationSettings(object):
-    _organization_name = 'RA_Python'
-    _config_file_name = 'Remainder.conf'
+class ApplicationSettings:
+    _access_token = '20261245390.1677ed0.f9d9fd4ebb134fde90dc9ef54d443fa8'
+    _organization_name = 'Project'
+    _config_file_name = 'instagram_widget.conf'
+    _db_name = 'instagram.db'
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
@@ -23,22 +25,17 @@ class ApplicationSettings(object):
         self._config.read(self._local_config_path())
 
     @property
-    def collection(self) -> str:
-        return self._get_value('General', 'collection')
+    def token(self) -> str:
+        return self._get_value('General', 'token')
 
     @property
-    def notifier(self) -> str:
-        return self._get_value('General', 'notifier')
-
-    @property
-    def timeout(self) -> int:
-        return int(self._get_value('General', 'timeout'))
+    def db_name(self) -> str:
+        return self._get_value('General', 'db_name')
 
     def _create_default_local_config(self):
         self._config['General'] = {}
-        self._config['General']['collection'] = str()
-        self._config['General']['notifier'] = str()
-        self._config['General']['timeout'] = str()
+        self._config['General']['token'] = self._access_token
+        self._config['General']['db_name'] = self._db_name
 
         path = self._local_config_path()
         basedir = os.path.dirname(path)
