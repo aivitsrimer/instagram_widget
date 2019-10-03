@@ -1,5 +1,7 @@
 import sqlite3
 
+# TODO добавить имя клиента в базу
+
 
 class SqliteDataStorage:
     def __init__(self, db_path):
@@ -19,7 +21,7 @@ class SqliteDataStorage:
         pass
 
     def get_photos(self, token):
-        query = fr'''SELECT * FROM instagram_items INNER JOIN clients ON instagram_items.user_id = clients.user_id WHERE clients.access_token = "{token}" '''
+        query = fr'''SELECT instagram_items.photo_id, instagram_items.photo_link FROM instagram_items INNER JOIN clients ON instagram_items.user_id = clients.user_id WHERE clients.access_token = "{token}" '''
 
         self._cursor.execute(query)
         result = self._cursor.fetchall()
