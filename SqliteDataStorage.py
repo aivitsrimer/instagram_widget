@@ -1,6 +1,6 @@
 import sqlite3
 
-# TODO добавить имя клиента в базу
+# TODO добавить имя клиента в базу, ссылку на аккаунт для перехода
 
 
 class SqliteDataStorage:
