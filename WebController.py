@@ -21,8 +21,8 @@ async def root(_request: web.Request) -> web.Response:
     raise web.HTTPFound(location='/collections')
 
 
-@routes.get('/collections')
-@aiohttp_jinja2.template('collections.jinja2')
+@routes.get('/main_page')
+@aiohttp_jinja2.template('main_page.jinja2')
 async def collections(request: web.Request) -> dict:
     manager: CollectionManager = request.app['collection_manager']
     return {'collections': manager.collections()}
