@@ -9,6 +9,9 @@ class ApplicationSettings:
     _organization_name = 'Project'
     _config_file_name = 'instagram_widget.conf'
     _db_name = 'instagram.db'
+    _web_host = '127.0.0.1'
+    _web_port = '8080'
+    _templates_path = 'templates'
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
@@ -32,10 +35,26 @@ class ApplicationSettings:
     def db_name(self) -> str:
         return self._get_value('General', 'db_name')
 
+    @property
+    def web_host(self) -> str:
+        return self._get_value('Web', 'host')
+
+    @property
+    def web_port(self) -> int:
+        return int(self._get_value('Web', 'port'))
+
+    @property
+    def templates_path(self) -> str:
+        return self._get_value('Web', 'templates_path')
+
     def _create_default_local_config(self):
         self._config['General'] = {}
         self._config['General']['token'] = self._access_token
         self._config['General']['db_name'] = self._db_name
+        self._config['Web'] = {}
+        self._config['Web']['host'] = self._web_host
+        self._config['Web']['port'] = self._web_port
+        self._config['Web']['templates_path'] = self._templates_path
 
         path = self._local_config_path()
         basedir = os.path.dirname(path)
