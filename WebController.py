@@ -15,8 +15,8 @@ routes = web.RouteTableDef()
 
 @routes.get('/')
 @aiohttp_jinja2.template('main_page.jinja2')
-async def collections(request: web.Request):
-    print(request.url.relative())
+async def main_page(request: web.Request):
+    pass
     # возможность перехода на виджет и json
 
 
