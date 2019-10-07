@@ -5,10 +5,15 @@
 
 	</head>
 	<body>
-		<h1> виджет </h1>
-		<p>
-			<img src="URL" alt="альтернативный текст">
-
-		</p>
+		{% if photos %}
+            <h3>{{name}}</h3>
+            <p>
+                {% for photo in photos %}
+                    <img src="{{photo.photo_link}}">
+                {% endfor %}
+            </p>
+        {% else %}
+            <p>No photos.</p>
+        {% endif %}
 	</body>
 </html>
