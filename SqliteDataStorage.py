@@ -31,6 +31,5 @@ class SqliteDataStorage:
         self._connection.commit()
         return self._cursor.lastrowid
 
-
     def remove_photo(self):
         pass

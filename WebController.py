@@ -5,6 +5,7 @@ from aiohttp import web
 import aiohttp_jinja2
 
 from InstagramItem import InstagramItem
+from Instagram import Instagram
 
 from ApplicationSettings import application_settings
 from SqliteDataStorage import SqliteDataStorage
@@ -17,7 +18,6 @@ routes = web.RouteTableDef()
 @aiohttp_jinja2.template('main_page.jinja2')
 async def main_page(request: web.Request):
     pass
-    # возможность перехода на виджет и json
 
 
 @routes.get('/widget')
@@ -29,14 +29,24 @@ async def get_photos(request: web.Request):
     photos = InstagramItem.retrieve_list(data)
 
     return {'name': name, 'photos': photos}
-    # отображение фото из InstagramItem
 
 
-# @routes.get('/api/json')
-# async def collections(request: web.Request) -> web.Response:
-#     manager: CollectionManager = request.app['collection_manager']
-#     return web.json_response(manager.collections())
-#     # вывести json
+@routes.get('/api/media')
+async def api_media(request: web.Request) -> web.Response:
+    api = Instagram(application_settings.token)
+    return web.json_response(api.media())
+
+
+@routes.get('/api/widget')
+async def api_widget(request: web.Request) -> web.Response:
+    db = SqliteDataStorage(application_settings.db_name)
+    data = db.get_photos(application_settings.token)
+    photos = InstagramItem.retrieve_list(data)
+    response = []
+    for photo in photos:
+        response.append(photo.convert_to_dict())
+    return web.json_response(response)
+
 
 def start_server(host, port, templates_path):
 

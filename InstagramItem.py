@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 
 
 @dataclass
@@ -29,3 +29,6 @@ class InstagramItem:
         for media_item in media_data:
             if media_item not in db_data:
                 db.insert_photo(media_item.photo_id, media_item.photo_link, media_item.user_id)
+
+    def convert_to_dict(self):
+        return asdict(self)
