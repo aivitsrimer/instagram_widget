@@ -9,6 +9,7 @@ class Instagram:
     def __init__(self, token=None):
         self._access_token = token
         self._http_client = HttpClient()
+        self.error_msg = False
 
     def media(self):
         response = self._get('users/self/media/recent')
@@ -27,15 +28,17 @@ class Instagram:
         Получает ответ от API
         :return: словарь из json ответа
         """
-        self._check_exists_token()
-        url = self._build_api_url(path)
-        response = self._http_client.send_request(url)
-        parsed_response = json.loads(response)
-        # print(url)
+        try:
+            self._check_exists_token()
+            url = self._build_api_url(path)
+            response = self._http_client.send_request(url)
+            parsed_response = json.loads(response)
 
-        # TODO обработать ошибки
-
-        return parsed_response['data']
+            return parsed_response['data']
+        except Exception as e:
+            self.error_msg = e
+            print(e)
+            return False
 
     def _build_api_url(self, path, params=None):
         """
@@ -44,9 +47,14 @@ class Instagram:
         :param params: параметры для запроса
         :return: URL
         """
-        url = 'https://api.instagram.com/v1/'
-        params = {'access_token': self._access_token}
-        return url + path + '/?' + parse.urlencode(params)
+        try:
+            url = 'https://api.instagram.com/v1/'
+            params = {'access_token': self._access_token}
+            return url + path + '/?' + parse.urlencode(params)
+        except Exception as e:
+            self.error_msg = e
+            print(e)
+            return False
 
     def _check_exists_token(self):
         if not self._access_token:
@@ -58,8 +66,8 @@ def test_access_token(api):
         print(api.access_token)
         api.access_token = 'b123'
         print(api.access_token)
-    except Exception:
-        return 'Fail'
+    except Exception as e:
+        print(e)
     return 'All good'
 
 
