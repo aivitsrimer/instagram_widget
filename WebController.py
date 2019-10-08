@@ -28,7 +28,7 @@ async def get_photos(request: web.Request):
     data = db.get_photos(application_settings.token)
     photos = InstagramItem.retrieve_list(data)
 
-    return {'name': name, 'photos': photos + photos}
+    return {'name': name, 'photos': photos}
     # отображение фото из InstagramItem
 
 

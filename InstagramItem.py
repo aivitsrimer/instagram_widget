@@ -5,10 +5,30 @@ from dataclasses import dataclass
 class InstagramItem:
     photo_id: str
     photo_link: str
+    user_id: str
+
+    def __eq__(self, other):
+        if self.photo_id == other.photo_id:
+            return True
+        else:
+            return False
 
     @staticmethod
     def retrieve_list(list):
         result = []
         for item in list:
-            result.append(InstagramItem(item[0], item[1]))
+            if isinstance(item, dict):
+                result.append(InstagramItem(item['id'], item['images']['low_resolution']['url'],
+                                            item['user']['id']))
+            else:
+                result.append(InstagramItem(item[0], item[1], item[2]))
         return result
+
+    @staticmethod
+    def compare_and_save_to_db(media_data, db_data, db):
+        for media_item in media_data:
+            if not db_data:
+                db.insert_photo(media_item.photo_id, media_item.photo_link, media_item.user_id)
+            for db_item in db_data:
+                if not media_item == db_item:
+                    db.insert_photo(media_item.photo_id, media_item.photo_link, media_item.user_id)
