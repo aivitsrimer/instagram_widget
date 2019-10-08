@@ -27,8 +27,5 @@ class InstagramItem:
     @staticmethod
     def compare_and_save_to_db(media_data, db_data, db):
         for media_item in media_data:
-            if not db_data:
+            if media_item not in db_data:
                 db.insert_photo(media_item.photo_id, media_item.photo_link, media_item.user_id)
-            for db_item in db_data:
-                if not media_item == db_item:
-                    db.insert_photo(media_item.photo_id, media_item.photo_link, media_item.user_id)
