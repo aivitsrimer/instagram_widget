@@ -22,7 +22,7 @@ async def main_page(request: web.Request):
 
 @routes.get('/widget')
 @aiohttp_jinja2.template('widget.jinja2')
-async def get_photos(request: web.Request):
+async def widget(request: web.Request):
     name = 'Photos'
     db = SqliteDataStorage(application_settings.db_name)
     data = db.get_photos(application_settings.token)
