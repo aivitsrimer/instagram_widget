@@ -1,7 +1,5 @@
 import sqlite3
 
-# TODO добавить имя клиента в базу, ссылку на аккаунт для перехода
-
 
 class SqliteDataStorage:
     def __init__(self, db_path):
