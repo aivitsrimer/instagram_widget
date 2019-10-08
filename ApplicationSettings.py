@@ -12,6 +12,7 @@ class ApplicationSettings:
     _web_host = '127.0.0.1'
     _web_port = '8080'
     _templates_path = 'templates'
+    _widget_photo_limit = '3'
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
@@ -36,6 +37,10 @@ class ApplicationSettings:
         return self._get_value('General', 'db_name')
 
     @property
+    def widget_photo_limit(self) -> int:
+        return int(self._get_value('General', 'widget_photo_limit'))
+
+    @property
     def web_host(self) -> str:
         return self._get_value('Web', 'host')
 
@@ -51,6 +56,7 @@ class ApplicationSettings:
         self._config['General'] = {}
         self._config['General']['token'] = self._access_token
         self._config['General']['db_name'] = self._db_name
+        self._config['General']['widget_photo_limit'] = self._widget_photo_limit
         self._config['Web'] = {}
         self._config['Web']['host'] = self._web_host
         self._config['Web']['port'] = self._web_port

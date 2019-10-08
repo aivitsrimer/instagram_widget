@@ -25,7 +25,7 @@ async def main_page(request: web.Request):
 async def widget(request: web.Request):
     name = 'Photos'
     db = SqliteDataStorage(application_settings.db_name)
-    data = db.get_photos(application_settings.token)
+    data = db.get_photos(application_settings.token, application_settings.widget_photo_limit)
     photos = InstagramItem.retrieve_list(data)
 
     return {'name': name, 'photos': photos}
@@ -40,7 +40,7 @@ async def api_media(request: web.Request) -> web.Response:
 @routes.get('/api/widget')
 async def api_widget(request: web.Request) -> web.Response:
     db = SqliteDataStorage(application_settings.db_name)
-    data = db.get_photos(application_settings.token)
+    data = db.get_photos(application_settings.token, application_settings.widget_photo_limit)
     photos = InstagramItem.retrieve_list(data)
     response = []
     for photo in photos:

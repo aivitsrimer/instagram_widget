@@ -3,9 +3,9 @@
 
 Возможные улучшения:
 Добавить имя клиента в базу для отображения ника в виджете и ссылку на аккаунт для перехода.
-
-Для поддержки нескольких пользователей нужно дополнительно на js
-    написать сохранение access token
+Красивое оформление виджета, необходимо изучение html, css и js.
+Поддержка нескольких пользователей, необходимо дополнительно на js написать сохранение access token
+    из-за особенностей получения access token от Инстаграма.
 """
 
 
@@ -23,7 +23,7 @@ def start():
     media_data = InstagramItem.retrieve_list(media)
 
     db = SqliteDataStorage(application_settings.db_name)
-    data = db.get_photos(access_token)
+    data = db.get_photos(access_token, application_settings.widget_photo_limit)
     db_data = InstagramItem.retrieve_list(data)
 
     InstagramItem.compare_and_save_to_db(media_data, db_data, db)

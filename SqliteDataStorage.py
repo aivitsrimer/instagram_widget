@@ -11,10 +11,11 @@ class SqliteDataStorage:
 
         self._cursor = self._connection.cursor()
 
-    def get_photos(self, token):
+    def get_photos(self, token, widget_photo_limit):
         query = fr'''SELECT instagram_items.photo_id, instagram_items.photo_link, instagram_items.user_id, 
         instagram_items.created_time FROM instagram_items INNER JOIN clients ON 
-        instagram_items.user_id = clients.user_id WHERE clients.access_token = "{token}" '''
+        instagram_items.user_id = clients.user_id WHERE clients.access_token = "{token}" 
+        ORDER BY instagram_items.created_time DESC LIMIT {widget_photo_limit}'''
 
         self._cursor.execute(query)
         result = self._cursor.fetchall()
