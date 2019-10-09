@@ -20,7 +20,12 @@ def start():
     access_token = application_settings.token
     api = Instagram(access_token)
     media = api.media()
-    media_data = InstagramItem.retrieve_list(media)
+
+    if not media:
+        print(api.error_msg)
+    else:
+        media_data = InstagramItem.retrieve_list(media)
+        return media_data
 
     db = SqliteDataStorage(application_settings.db_name)
     data = db.get_photos(access_token, application_settings.widget_photo_limit)

@@ -2,18 +2,22 @@
 <html>
 	<head>
 		  <title>Виджет</title>
-
 	</head>
 	<body>
-		{% if photos %}
-            <h3>{{name}}</h3>
-            <p>
-                {% for photo in photos %}
-                    <img src="{{photo.photo_link}}">
-                {% endfor %}
-            </p>
-        {% else %}
-            <p>No photos.</p>
-        {% endif %}
+		<p>
+			{% if error %}
+				<h4 style="color: red" >{{error}}</h4>
+			{% endif %}					
+		</p>
+			{% if photos %}
+				<h3>{{name}}</h3>
+				<p>
+					{% for photo in photos %}
+						<img src="{{photo.photo_link}}" >
+					{% endfor %}					
+				</p>
+			{% else %}
+				<p>No photos.</p>
+			{% endif %}
 	</body>
 </html>

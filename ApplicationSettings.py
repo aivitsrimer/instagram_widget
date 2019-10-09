@@ -12,7 +12,7 @@ class ApplicationSettings:
     _web_host = '127.0.0.1'
     _web_port = '8080'
     _templates_path = 'templates'
-    _widget_photo_limit = '3'
+    _widget_photo_limit = '10'
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):

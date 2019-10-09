@@ -24,28 +24,34 @@ async def main_page(request: web.Request):
 @aiohttp_jinja2.template('widget.jinja2')
 async def widget(request: web.Request):
     name = 'Photos'
+    api = Instagram(application_settings.token)
     db = SqliteDataStorage(application_settings.db_name)
     data = db.get_photos(application_settings.token, application_settings.widget_photo_limit)
     photos = InstagramItem.retrieve_list(data)
 
-    return {'name': name, 'photos': photos}
+    return {'name': name, 'photos': photos, 'error': api.error_msg}
 
 
 @routes.get('/api/media')
 async def api_media(request: web.Request) -> web.Response:
     api = Instagram(application_settings.token)
     return web.json_response(api.media())
+    # or api.error_msg
 
 
 @routes.get('/api/widget')
 async def api_widget(request: web.Request) -> web.Response:
+    api = Instagram(application_settings.token)
+    # media = api.media()
     db = SqliteDataStorage(application_settings.db_name)
     data = db.get_photos(application_settings.token, application_settings.widget_photo_limit)
     photos = InstagramItem.retrieve_list(data)
+
     response = []
     for photo in photos:
         response.append(photo.convert_to_dict())
     return web.json_response(response)
+    # or api.error_msg
 
 
 def start_server(host, port, templates_path):
